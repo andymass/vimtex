@@ -36,13 +36,9 @@ endfunction
 function! vimtex#doc#make_selection(context) " {{{1
   if has_key(a:context, 'selected') | return | endif
 
-    echo a:context | sleep 1
   if len(a:context.candidates) == 0
     if exists('a:context.name')
-      " echohl ErrorMsg
-      " echo 'Sorry, no doc for '.a:context.name
-      " echohl NONE
-      call vimtex#echo#warning('No package found for command '
+      call vimtex#log#warning('No package found for command: \'
           \ . a:context.name)
     endif
     let a:context.selected = ''
@@ -163,7 +159,6 @@ function! s:packages_from_command(cmd) " {{{1
     endif
   endfor
 
-  echo '!'.l:candidates
   return {
         \ 'type': 'command',
         \ 'name': a:cmd,
