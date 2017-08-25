@@ -151,8 +151,13 @@ function! s:xwin_template.xwin_exists() dict " {{{1
   " If xwin_id is unset, check if matching viewer windows exist
   "
   if self.xwin_id == 0
-    let cmd = 'xdotool search --name ' . fnamemodify(self.out(), ':t')
-    let result = split(system(cmd), '\n')
+    if has_key(self, 'get_pid')
+      let l:cmd = 'xdotool search --all --pid '.self.get_pid()
+    else
+      let l:cmd = 'xdotool search'
+    endif
+    let l:cmd .= ' --name ' . fnamemodify(self.out(), ':t')
+    let result = split(system(l:cmd), '\n')
     if len(result) > 0
       let self.xwin_id = result[-1]
     endif

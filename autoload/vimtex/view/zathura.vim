@@ -114,5 +114,10 @@ function! s:zathura.latexmk_append_argument() dict " {{{1
 endfunction
 
 " }}}1
+function! s:zathura.get_pid() dict " {{{1
+    return str2nr(system('pgrep -nf "^[^ ]*zathura'
+        \ . '.+--servername\s+'.v:servername.'\s+"')[:-2])
+endfunction
+" }}}1
 
 " vim: fdm=marker sw=2
